@@ -37,21 +37,27 @@ export default function Register() {
 
   const classes = useStyles();
 
-  const submitHandler = async ({ name, email, password, confirmPassword }) => {
+  const submitHandler = async ({ name, email, password, confirmPassword, companyName }) => {
     closeSnackbar();
     if (password !== confirmPassword) {
       enqueueSnackbar("Passwords don't match", { variant: 'error' });
       return;
     }
     try {
+      
       const { data } = await axios.post('/api/users/register', {
         name,
         email,
         password,
       });
+
       dispatch({ type: 'USER_LOGIN', payload: data });
       Cookies.set('userInfo', data);
       router.push('/');
+
+      const { companydata } = await axios.post('/api/users/company', {
+        companyName,
+      });
     } catch (err) {
       enqueueSnackbar(getError(err), { variant: 'error' });
     }
@@ -174,6 +180,28 @@ export default function Register() {
                         : 'Confirm  Password is required'
                       : ''
                   }
+                  {...field}
+                ></TextField>
+              )}
+            ></Controller>
+          </ListItem>
+          <ListItem>
+            <Controller
+              name="companyName"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: true,
+                minLength: 3,
+              }}
+              render={({ field }) => (
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  id="companyName"
+                  label="Whats your Company Name ?"
+                  inputProps={{ type: 'name' }}
+                  error={Boolean(errors.confirmPassword)}
                   {...field}
                 ></TextField>
               )}
