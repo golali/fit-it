@@ -6,9 +6,9 @@ const handler = nc();
 
 handler.get(async (req, res) => {
   await db.connect();
-  const categories = await Company.find().distinct('categories');
+  const comptypes = await Company.find().distinct('companyType');
   await db.disconnect();
-  res.send(categories);
+  res.send(comptypes);
 });
 
 export default handler;

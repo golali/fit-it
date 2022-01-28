@@ -82,7 +82,7 @@ export default function Layout({ title, description, children }) {
 
   const fetchCompTypes = async () => {
     try {
-      const { data } = await axios.get(`/api/products/comptypes`);
+      const { data } = await axios.get(`/api/company/comptypes`);
       setCompTypes(data);
     } catch (err) {
       enqueueSnackbar(getError(err), { variant: 'error' });
@@ -185,7 +185,7 @@ export default function Layout({ title, description, children }) {
                       component="a"
                       onClick={sidebarCloseHandler}
                     >
-                      <ListItemText primary={category}></ListItemText>
+                      <ListItemText primary={comptype}></ListItemText>
                     </ListItem>
                   </NextLink>
                 ))}
@@ -283,7 +283,7 @@ export default function Layout({ title, description, children }) {
         </AppBar>
         <Container className={classes.main}>{children}</Container>
         <footer className={classes.footer}>
-          <Typography>All rights reserved. Next Amazona.</Typography>
+          <Typography>We help you finding the perfect Match .. for your Projects ;)</Typography>
         </footer>
       </ThemeProvider>
     </div>
