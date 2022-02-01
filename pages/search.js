@@ -53,18 +53,7 @@ export default function Search(props) {
   };
  
   const { state, dispatch } = useContext(Store);
-  const addToCartHandler = async (product) => {
-    const existItem = state.cart.cartItems.find((x) => x._id === product._id);
-    const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/api/products/${product._id}`);
-    if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
-      return;
-    }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
-    router.push('/cart');
-  };
-
+  
   return (
     <Layout title="Search">
       <Grid className={classes.mt1} container spacing={1}>
@@ -92,8 +81,7 @@ export default function Search(props) {
               {companies.length === 0 ? 'No' : countProducts} Results
               {query !== 'all' && query !== '' && ' : ' + query}
               {comptype !== 'all' && ' : ' + comptype}
-              {(query !== 'all' && query !== '') ||
-              category !== 'all' ? (
+              {(query !== 'all' && query !== '') ? (
                 <Button onClick={() => router.push('/search')}>
                   <CancelIcon />
                 </Button>
@@ -104,8 +92,7 @@ export default function Search(props) {
             {companies.map((company) => (
               <Grid item md={4} key={company.companyName}>
                 <CompanyItem
-                  comapny={company}
-                  addToCartHandler={addToCartHandler}
+                  company={company}
                 />
               </Grid>
             ))}
@@ -126,7 +113,7 @@ export async function getServerSideProps({ query }) {
   await db.connect();
   const pageSize = query.pageSize || PAGE_SIZE;
   const page = query.page || 1;
-  const category = query.category || '';
+  const comptype = query.comptype || '';
   const searchQuery = query.query || '';
 
   const queryFilter =
@@ -139,10 +126,9 @@ export async function getServerSideProps({ query }) {
         }
       : {};
 
-  const categoryFilter = category && category !== 'all' ? { comptype } : {};
+  const categoryFilter = comptype && comptype !== 'all' ? { comptype } : {};
 
   const comptypes = await Company.find().distinct('CompanyType');
-  const brands = await Company.find().distinct('brand');
   const companyDocs = await Company.find(
     {
       ...queryFilter,

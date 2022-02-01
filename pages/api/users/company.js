@@ -11,10 +11,10 @@ handler.post(async (req, res) => {
   const newCompany = new Company({
     companyName: req.body.companyName,
     slug: req.body.companyName,
-    companyType: "IT-Consulting",
-    companyWebsite: "https://new.comi.com",
+    companyType: req.body.companyType,
+    companyWebsite: req.body.companyWebsite,
     companyLogo: "/images/esentri.jpg",
-    companyIndustry: "Government",
+    companyIndustry: req.body.companyIndustry,
     knowHow: ["Google", "AWS", "Scrum"],
   });
   const company = await newCompany.save();

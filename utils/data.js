@@ -20,7 +20,7 @@ const data = {
       companyName: "esentri",
       slug: "esentri",
       companyType: "IT-Consulting",
-      companyWebsite: "https://esentri.comi.com",
+      companyWebsite: "https://esentri.com",
       companyLogo: "/images/esentri.jpg",
       companyIndustry: "Government",
       knowHow: ["Terraform", "AWS", "Scrum"],

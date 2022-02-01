@@ -24,6 +24,7 @@ export default function Register() {
     control,
     formState: { errors },
   } = useForm();
+
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
@@ -37,14 +38,16 @@ export default function Register() {
 
   const classes = useStyles();
 
-  const submitHandler = async ({ name, email, password, confirmPassword, companyName }) => {
+  const submitHandler = async ({ name, email, password, confirmPassword, companyName, companyType, companyWebsite, companyIndustry }) => {
     closeSnackbar();
+
+    /// PW Validation
     if (password !== confirmPassword) {
       enqueueSnackbar("Passwords don't match", { variant: 'error' });
       return;
     }
-    try {
-      
+
+    try {  
       const { data } = await axios.post('/api/users/register', {
         name,
         email,
@@ -57,16 +60,21 @@ export default function Register() {
 
       const { companydata } = await axios.post('/api/users/company', {
         companyName,
+        companyType,
+        companyWebsite,
+        companyIndustry,
       });
+
     } catch (err) {
       enqueueSnackbar(getError(err), { variant: 'error' });
     }
   };
+
   return (
     <Layout title="Register">
       <form onSubmit={handleSubmit(submitHandler)} className={classes.form}>
         <Typography component="h1" variant="h1">
-          Register
+          Registration of your personal profile
         </Typography>
         <List>
           <ListItem>
@@ -185,6 +193,9 @@ export default function Register() {
               )}
             ></Controller>
           </ListItem>
+          <Typography component="h1" variant="h1">
+          Register your company profile
+        </Typography>
           <ListItem>
             <Controller
               name="companyName"
@@ -201,7 +212,88 @@ export default function Register() {
                   id="companyName"
                   label="Whats your Company Name ?"
                   inputProps={{ type: 'name' }}
-                  error={Boolean(errors.confirmPassword)}
+                  {...field}
+                ></TextField>
+              )}
+            ></Controller>
+          </ListItem>
+          <ListItem>
+            <Controller
+              name="companyType"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: true,
+                pattern: /^(IT-Consulting|Freelancer|Other)/,
+              }}
+              render={({ field }) => (
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  id="companyType"
+                  label="Whats your Company Type ? Choose between IT-Consulting, Freelancer or Other"
+                  inputProps={{ type: 'name' }}
+                  error={Boolean(errors.companyType)}
+                  helperText={
+                    errors.companyType
+                      ? errors.companyType.type === 'pattern'
+                        ? 'Please choose between IT-Consulting, Freelancer or Other'
+                        : 'Company Type is required'
+                      : ''
+                  }
+                  
+                  {...field}
+                ></TextField>
+              )}
+            ></Controller>
+          </ListItem>
+          <ListItem>
+            <Controller
+              name="companyWebsite"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: true,
+                pattern: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+              }}
+              render={({ field }) => (
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  id="companyWebsite"
+                  label="Whats your Company Website ?"
+                  inputProps={{ type: 'name' }}
+                  error={Boolean(errors.email)}
+                  helperText={
+                    errors.companyWebsite
+                      ? errors.companyWebsite.type === 'pattern'
+                        ? 'Email is not valid, please use a valid Format'
+                        : 'Website is required'
+                      : ''
+                  }
+                  {...field}
+                ></TextField>
+              )}
+            ></Controller>
+          </ListItem>
+          <Typography>
+            Which industrie are you working in ?
+          </Typography>
+          <ListItem>
+            <Controller
+              name="companyIndustry"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: true,
+              }}
+              render={({ field }) => (
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  id="companyIndustry"
+                  label="Whats your Company Industry ?"
+                  inputProps={{ type: 'name' }}
                   {...field}
                 ></TextField>
               )}
