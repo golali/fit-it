@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  List,
-  ListItem,
-  MenuItem,
-  Select,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, Grid, List, ListItem, MenuItem, Select, Typography,} from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
@@ -20,54 +11,55 @@ import { Store } from '../utils/Store';
 import axios from 'axios';
 import { Pagination } from '@material-ui/lab';
 
-const PAGE_SIZE = 3;
-
-
+const PAGE_SIZE = 10;
 
 export default function Search(props) {
   const classes = useStyles();
   const router = useRouter();
-  const { query = 'all', comptype = 'all',} = router.query;
-  const { companies, countProducts, comptypes, pages } = props;
+  const {
+    query = 'all',
+    brand = 'all',
+  } = router.query;
+  const { companies, countCompanies, types, pages } = props;
 
   const filterSearch = ({
     page,
-    comptype,
+    brand,
     searchQuery,
   }) => {
     const path = router.pathname;
     const { query } = router;
+    if (page) query.page = page;
     if (searchQuery) query.searchQuery = searchQuery;
-    if (comptype) query.comptype = comptype;
+    if (brand) query.brand = brand;
 
     router.push({
       pathname: path,
       query: query,
     });
   };
-  const comptypeHandler = (e) => {
-    filterSearch({ comptype: e.target.value });
-  };
   const pageHandler = (e, page) => {
     filterSearch({ page });
   };
- 
+  const brandHandler = (e) => {
+    filterSearch({ brand: e.target.value });
+  };
+
   const { state, dispatch } = useContext(Store);
-  
   return (
     <Layout title="Search">
       <Grid className={classes.mt1} container spacing={1}>
-        <Grid item md={4}>
+        <Grid item md={3}>
           <List>
             <ListItem>
               <Box className={classes.fullWidth}>
-                <Typography>Categories</Typography>
-                <Select fullWidth value={comptype} onChange={comptypeHandler}>
+                <Typography>Company Type</Typography>
+                <Select value={brand} onChange={brandHandler} fullWidth>
                   <MenuItem value="all">All</MenuItem>
-                  {comptypes &&
-                    comptypes.map((comptype) => (
-                      <MenuItem key={comptype} value={comptype}>
-                        {comptype}
+                  {types &&
+                    types.map((brand) => (
+                      <MenuItem key={brand} value={brand}>
+                        {brand}
                       </MenuItem>
                     ))}
                 </Select>
@@ -78,12 +70,13 @@ export default function Search(props) {
         <Grid item md={9}>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
-              {companies.length === 0 ? 'No' : countProducts} Results
+              {companies.length === 0 ? 'No' : countCompanies} Results
               {query !== 'all' && query !== '' && ' : ' + query}
-              {comptype !== 'all' && ' : ' + comptype}
-              {(query !== 'all' && query !== '') ? (
+              {brand !== 'all' && ' : ' + brand}
+              {(query !== 'all' && query !== '') ||
+              brand !== 'all' ? (
                 <Button onClick={() => router.push('/search')}>
-                  <CancelIcon />
+                 <CancelIcon />
                 </Button>
               ) : null}
             </Grid>
@@ -113,37 +106,39 @@ export async function getServerSideProps({ query }) {
   await db.connect();
   const pageSize = query.pageSize || PAGE_SIZE;
   const page = query.page || 1;
-  const comptype = query.comptype || '';
+  const brand = query.brand || '';
   const searchQuery = query.query || '';
 
   const queryFilter =
     searchQuery && searchQuery !== 'all'
       ? {
-          name: {
+          companyName: {
             $regex: searchQuery,
             $options: 'i',
           },
         }
       : {};
 
-  const categoryFilter = comptype && comptype !== 'all' ? { comptype } : {};
-
-  const comptypes = await Company.find().distinct('CompanyType');
+  const brandFilter = brand && brand !== 'all' 
+      ? { 
+        companyType: brand
+        } 
+      : {};
+ 
+  const types = await Company.find().distinct('companyType')
   const companyDocs = await Company.find(
     {
       ...queryFilter,
-      ...categoryFilter,
+      ...brandFilter,
     },
-
   )
-    .sort()
     .skip(pageSize * (page - 1))
     .limit(pageSize)
     .lean();
 
-  const countProducts = await Company.countDocuments({
+  const countCompanies = await Company.countDocuments({
     ...queryFilter,
-    ...categoryFilter,
+    ...brandFilter,
   });
   await db.disconnect();
 
@@ -152,10 +147,10 @@ export async function getServerSideProps({ query }) {
   return {
     props: {
       companies,
-      countProducts,
+      countCompanies,
       page,
-      pages: Math.ceil(countProducts / pageSize),
-      comptypes,
+      pages: Math.ceil(countCompanies / pageSize),
+      types,
     },
   };
 }

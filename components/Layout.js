@@ -174,10 +174,10 @@ export default function Layout({ title, description, children }) {
                   </Box>
                 </ListItem>
                 <Divider light />
-                {comptypes.map((comptype) => (
+                {comptypes.map((comptypes) => (
                   <NextLink
-                    key={comptype}
-                    href={`/search?comptype=${comptype}`}
+                    key={comptypes}
+                    href={`/search?brand=${comptypes}`}
                     passHref
                   >
                     <ListItem
@@ -185,7 +185,7 @@ export default function Layout({ title, description, children }) {
                       component="a"
                       onClick={sidebarCloseHandler}
                     >
-                      <ListItemText primary={comptype}></ListItemText>
+                      <ListItemText primary={comptypes}></ListItemText>
                     </ListItem>
                   </NextLink>
                 ))}
