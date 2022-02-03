@@ -19,9 +19,13 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '80vh',
   },
   footer: {
-    marginTop: 30,
-    marginRight: 30,
+    marginTop: 40,
+    minHeight: '10vh',
     textAlign: 'right',
+    paddingRight:'40px',
+    paddingTop:'20px',
+    backgroundColor: '#208070',
+
   },
   section: {
     marginTop: 10,
@@ -40,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'transparent',
   },
   error: {
-    color: '#f04040',
+    color: '#f08080',
   },
   fullWidth: {
     width: '100%',
@@ -59,6 +63,12 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: { padding: 0 },
   mt1: { marginTop: '1rem' },
+
+  absolute: {
+    position: "absolute",
+    width: '50%' ,
+    bottom: "100px",
+  }, 
 
   // searcharea
   searchSection: {

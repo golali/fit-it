@@ -180,7 +180,7 @@ export default function CompanyScreen(props) {
           </Card>
         </Grid>
       </Grid>
-      <div className={classes.section}>
+      <div className={classes.absolute}>
         <NextLink href="/" passHref>
           <Link>
             <Typography>back to all companies</Typography>

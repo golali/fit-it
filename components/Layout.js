@@ -283,7 +283,7 @@ export default function Layout({ title, description, children }) {
         </AppBar>
         <Container className={classes.main}>{children}</Container>
         <footer className={classes.footer}>
-          <Typography>We help you finding the perfect Match .. for your Projects ;)</Typography>
+          <Typography variant="overline" >We help you finding the perfect Match .. for your Projects ;)</Typography>
         </footer>
       </ThemeProvider>
     </div>
