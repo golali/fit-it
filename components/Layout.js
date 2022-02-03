@@ -164,7 +164,7 @@ export default function Layout({ title, description, children }) {
                     alignItems="center"
                     justifyContent="space-between"
                   >
-                    <Typography>Shopping by category</Typography>
+                    <Typography>Filter by Company Type</Typography>
                     <IconButton
                       aria-label="close"
                       onClick={sidebarCloseHandler}

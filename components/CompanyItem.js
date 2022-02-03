@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import React from 'react';
+import Divider from '@mui/material/Divider';
 import NextLink from 'next/link';
 
 export default function CompanyItem({ company, addToCartHandler }) {
@@ -30,15 +31,14 @@ export default function CompanyItem({ company, addToCartHandler }) {
           </CardContent>
         </CardActionArea>
       </NextLink>
+      <Divider />
       <CardActions>
         <Typography> More information ?</Typography>
-        <Button
-          size="small"
-          color="primary"
-          onClick={() => addToCartHandler(product)}
-        >
+        <NextLink href={`/company/${company.slug}`} passHref>
+        <Button size="small" color="primary">
           Click here !
         </Button>
+        </NextLink>
       </CardActions>
     </Card>
   );

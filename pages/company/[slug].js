@@ -10,8 +10,10 @@ import {
   Card,
   Button,
   TextField,
+  CardMedia,
   CircularProgress,
 } from '@material-ui/core';
+import Divider from '@mui/material/Divider';
 import Rating from '@material-ui/lab/Rating';
 import Layout from '../../components/Layout';
 import useStyles from '../../utils/styles';
@@ -89,35 +91,63 @@ export default function CompanyScreen(props) {
 
   return (
     <Layout title={company.companyName} description={company.companyType}>
-      <div className={classes.section}>
-        <NextLink href="/" passHref>
-          <Link>
-            <Typography>back to all companies</Typography>
-          </Link>
-        </NextLink>
-      </div>
-      <Grid container spacing={1}>
-        <Grid item md={7} xs={12}>
+      <Grid container spacing={4}>
+        <Grid item xs={3}>
           <List>
             <ListItem>
-              <Typography component="h1" variant="h1">
-                {company.companyName}
+              <Typography component="h1" variant="h2">
+                Company Name
               </Typography>
             </ListItem>
+            <Divider />
             <ListItem>
-              <Typography>Company Type: {company.companyType}</Typography>
+              <Typography>Company Type</Typography>
             </ListItem>
+            <Divider />
             <ListItem>
-              <Typography>Company Website: </Typography>
-              <Link>{company.companyWebsite}</Link>
+              <Typography >Company Website </Typography>
             </ListItem>
+            <Divider />
             <ListItem>
-              <Typography>Company Industry: {company.companyIndustry}</Typography>
+              <Typography >Company Industry</Typography>
             </ListItem>
           </List>
         </Grid>
-        <Grid item md={5} xs={12}>
+        <Grid item xs={4}>
+          <List>
+            <ListItem>
+              <Typography component="h1" variant="h2" style={{color: "#802030"}}>
+                {company.companyName}
+              </Typography>
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <Typography style={{color: "#802030"}}>{company.companyType}</Typography>
+            </ListItem>
+            <Divider />
+            <ListItem>
+                <Typography >
+                  <Link style={{color: "#802030"}}>{company.companyWebsite}</Link>
+                </Typography>
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <Typography style={{color: "#802030"}}>{company.companyIndustry}</Typography>
+            </ListItem>
+          </List>
+        </Grid>
+        <Grid item xs={5}>
+        <Typography component="h1" variant="h2">
+                Description
+              </Typography>
           <Card>
+          <CardMedia
+          component="img"
+          image={company.companyLogo}
+          height="120"
+          width="100"
+          alt={company.companyName}
+        ></CardMedia>
             <List>
               <ListItem>
                 <Grid container>
@@ -150,79 +180,13 @@ export default function CompanyScreen(props) {
           </Card>
         </Grid>
       </Grid>
-      <List>
-        <ListItem>
-          <Typography name="reviews" id="reviews" variant="h2">
-            Customer Reviews
-          </Typography>
-        </ListItem>
-        {reviews.length === 0 && <ListItem>No review</ListItem>}
-        {reviews.map((review) => (
-          <ListItem key={review._id}>
-            <Grid container>
-              <Grid item className={classes.reviewItem}>
-                <Typography>
-                  <strong>{review.name}</strong>
-                </Typography>
-                <Typography>{review.createdAt.substring(0, 10)}</Typography>
-              </Grid>
-              <Grid item>
-                <Rating value={review.rating} readOnly></Rating>
-                <Typography>{review.comment}</Typography>
-              </Grid>
-            </Grid>
-          </ListItem>
-        ))}
-        <ListItem>
-          {userInfo ? (
-            <form onSubmit={submitHandler} className={classes.reviewForm}>
-              <List>
-                <ListItem>
-                  <Typography variant="h2">Leave your review</Typography>
-                </ListItem>
-                <ListItem>
-                  <TextField
-                    multiline
-                    variant="outlined"
-                    fullWidth
-                    name="review"
-                    label="Enter comment"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                </ListItem>
-                <ListItem>
-                  <Rating
-                    name="simple-controlled"
-                    value={rating}
-                    onChange={(e) => setRating(e.target.value)}
-                  />
-                </ListItem>
-                <ListItem>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                  >
-                    Submit
-                  </Button>
-
-                  {loading && <CircularProgress></CircularProgress>}
-                </ListItem>
-              </List>
-            </form>
-          ) : (
-            <Typography variant="h2">
-              Please{' '}
-              <Link href={`/login?redirect=/company/${company.slug}`}>
-                login
-              </Link>{' '}
-              to write a review
-            </Typography>
-          )}
-        </ListItem>
-      </List>
+      <div className={classes.section}>
+        <NextLink href="/" passHref>
+          <Link>
+            <Typography>back to all companies</Typography>
+          </Link>
+        </NextLink>
+      </div>  
     </Layout>
   );
 }
