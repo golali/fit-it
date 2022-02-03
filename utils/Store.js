@@ -8,11 +8,14 @@ const initialState = {
     cartItems: Cookies.get('cartItems')
       ? JSON.parse(Cookies.get('cartItems'))
       : [],
-    shippingAddress: Cookies.get('shippingAddress')
-      ? JSON.parse(Cookies.get('shippingAddress'))
+    billingAddress: Cookies.get('billingAddress') //shippingAddress //shippingAddress
+      ? JSON.parse(Cookies.get('billingAddress')) //shippingAddress
       : { location: {} },
     paymentMethod: Cookies.get('paymentMethod')
       ? Cookies.get('paymentMethod')
+      : '',
+    aboModell: Cookies.get('aboModell')
+      ? Cookies.get('aboModell')
       : '',
   },
   userInfo: Cookies.get('userInfo')
@@ -46,24 +49,24 @@ function reducer(state, action) {
       Cookies.set('cartItems', JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
-    case 'SAVE_SHIPPING_ADDRESS':
+    case 'SAVE_BILLING_ADDRESS': //SAVE_SHIPPING_ADDRESS
       return {
         ...state,
         cart: {
           ...state.cart,
-          shippingAddress: {
-            ...state.cart.shippingAddress,
+          billingAddress: { //shippingAddress
+            ...state.cart.billingAddress, //shippingAddress
             ...action.payload,
           },
         },
       };
-    case 'SAVE_SHIPPING_ADDRESS_MAP_LOCATION':
+    case 'SAVE_BILLING_ADDRESS_MAP_LOCATION': //SAVE_SHIPPING_ADDRESS_MAP_LOCATION
       return {
         ...state,
         cart: {
           ...state.cart,
-          shippingAddress: {
-            ...state.cart.shippingAddress,
+          billingAddress: {    //shippingAddress
+            ...state.cart.billingAddress,  //shippingAddress
             location: action.payload,
           },
         },
@@ -73,6 +76,15 @@ function reducer(state, action) {
         ...state,
         cart: { ...state.cart, paymentMethod: action.payload },
       };
+
+      //neu
+      case 'SAVE_ABO_MODELL':
+        return {
+          ...state,
+          cart: { ...state.cart, aboModell: action.payload },
+        };
+
+    //neu
     case 'CART_CLEAR':
       return { ...state, cart: { ...state.cart, cartItems: [] } };
     case 'USER_LOGIN':
@@ -83,7 +95,7 @@ function reducer(state, action) {
         userInfo: null,
         cart: {
           cartItems: [],
-          shippingAddress: { location: {} },
+          billingAddress: { location: {} }, //shippingAddress
           paymentMethod: '',
         },
       };

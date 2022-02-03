@@ -24,11 +24,11 @@ export default function Payment() {
   const [paymentMethod, setPaymentMethod] = useState('');
   const { state, dispatch } = useContext(Store);
   const {
-    cart: { shippingAddress },
+    cart: { billingAddress }, //shippingAddress, aboModell
   } = state;
   useEffect(() => {
-    if (!shippingAddress.address) {
-      router.push('/shipping');
+    if (!billingAddress.address) { //!shippingAddress.address
+      router.push('/billing'); //shipping
     } else {
       setPaymentMethod(Cookies.get('paymentMethod') || '');
     }
@@ -46,7 +46,7 @@ export default function Payment() {
   };
   return (
     <Layout title="Payment Method">
-      <CheckoutWizard activeStep={2}></CheckoutWizard>
+      <CheckoutWizard activeStep={3}></CheckoutWizard>
       <form className={classes.form} onSubmit={submitHandler}>
         <Typography component="h1" variant="h1">
           Payment Method
@@ -66,8 +66,8 @@ export default function Payment() {
                   control={<Radio />}
                 ></FormControlLabel>
                 <FormControlLabel
-                  label="Stripe"
-                  value="Stripe"
+                  label="Card"
+                  value="Card"
                   control={<Radio />}
                 ></FormControlLabel>
                 <FormControlLabel
@@ -88,7 +88,7 @@ export default function Payment() {
               fullWidth
               type="button"
               variant="contained"
-              onClick={() => router.push('/shipping')}
+              onClick={() => router.push('/abo')}
             >
               Back
             </Button>

@@ -254,6 +254,11 @@ export default function Layout({ title, description, children }) {
                       Profile
                     </MenuItem>
                     <MenuItem
+                      onClick={(e) => loginMenuCloseHandler(e, '/billing')}
+                    >
+                      Upgrade
+                    </MenuItem>
+                    <MenuItem
                       onClick={(e) =>
                         loginMenuCloseHandler(e, '/order-history')
                       }

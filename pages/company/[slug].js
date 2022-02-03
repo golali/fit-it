@@ -10,10 +10,8 @@ import {
   Card,
   Button,
   TextField,
-  CardMedia,
   CircularProgress,
 } from '@material-ui/core';
-import Divider from '@mui/material/Divider';
 import Rating from '@material-ui/lab/Rating';
 import Layout from '../../components/Layout';
 import useStyles from '../../utils/styles';

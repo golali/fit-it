@@ -24,7 +24,6 @@ export default function Register() {
     control,
     formState: { errors },
   } = useForm();
-
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
@@ -71,7 +70,6 @@ export default function Register() {
       enqueueSnackbar(getError(err), { variant: 'error' });
     }
   };
-
   return (
     <Layout title="Register">
       <form onSubmit={handleSubmit(submitHandler)} className={classes.form}>
