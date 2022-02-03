@@ -12,7 +12,8 @@ import {
   TextField,
   CircularProgress,
 } from '@material-ui/core';
-import Rating from '@material-ui/lab/Rating';
+import CardMedia from '@mui/material/CardMedia';
+import Divider from '@mui/material/Divider';
 import Layout from '../../components/Layout';
 import useStyles from '../../utils/styles';
 import Company from '../../models/Company';
