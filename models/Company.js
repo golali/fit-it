@@ -11,7 +11,7 @@ const companySchema = new mongoose.Schema(
     companyWebsite: { type: String, required: true },
     companyLogo: { type: String, required: true },
     companyIndustry: { type: String, required: true },
-    knowHow: [String],
+    knowHow: { type: String},
   },
   {
     timestamps: true,

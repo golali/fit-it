@@ -38,7 +38,7 @@ export default function Register() {
 
   const classes = useStyles();
 
-  const submitHandler = async ({ name, email, password, confirmPassword, companyName, companyType, companyWebsite, companyIndustry }) => {
+  const submitHandler = async ({ name, email, password, confirmPassword, companyName, companyType, companyWebsite, companyIndustry, knowHow }) => {
     closeSnackbar();
 
     /// PW Validation
@@ -58,11 +58,13 @@ export default function Register() {
       Cookies.set('userInfo', data);
       router.push('/');
 
+
       const { companydata } = await axios.post('/api/users/company', {
         companyName,
         companyType,
         companyWebsite,
         companyIndustry,
+        knowHow,
       });
 
     } catch (err) {
@@ -299,6 +301,26 @@ export default function Register() {
               )}
             ></Controller>
           </ListItem>
+          <ListItem>
+            <Controller
+              name="KnowHow"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: true,
+              }}
+              render={({ field }) => (
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  id="knowHow"
+                  label="Whats your Company KnowHow ? (Separate with ' , ' )"
+                  inputProps={{ type: 'name' }}
+                  {...field}
+                ></TextField>
+              )}
+            ></Controller>
+          </ListItem>          
           <ListItem>
             <Button variant="contained" type="submit" fullWidth color="primary">
               Register

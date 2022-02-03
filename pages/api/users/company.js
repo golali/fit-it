@@ -15,7 +15,7 @@ handler.post(async (req, res) => {
     companyWebsite: req.body.companyWebsite,
     companyLogo: "/images/esentri.jpg",
     companyIndustry: req.body.companyIndustry,
-    knowHow: ["Google", "AWS", "Scrum"],
+    knowHow: req.body.knowHow,
   });
   const company = await newCompany.save();
   await db.disconnect();

@@ -25,6 +25,7 @@ import {
   InputBase,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import FilterListIcon from '@mui/icons-material/FilterList';
 import CancelIcon from '@material-ui/icons/Cancel';
 import SearchIcon from '@material-ui/icons/Search';
 import useStyles from '../utils/styles';
@@ -130,7 +131,7 @@ export default function Layout({ title, description, children }) {
   return (
     <div>
       <Head>
-        <title>{title ? `${title} - Next Amazona` : 'Next Amazona'}</title>
+        <title>{title ? `${title} - Fit-IT` : 'Fit-IT'}</title>
         {description && <meta name="description" content={description}></meta>}
       </Head>
       <ThemeProvider theme={theme}>
@@ -144,7 +145,7 @@ export default function Layout({ title, description, children }) {
                 onClick={sidebarOpenHandler}
                 className={classes.menuButton}
               >
-                <MenuIcon className={classes.navbarButton} />
+                <FilterListIcon className={classes.navbarButton} />
               </IconButton>
               <NextLink href="/" passHref>
                 <Link>
