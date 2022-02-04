@@ -14,7 +14,7 @@ import {
   import { Controller, useForm } from 'react-hook-form';
 import CheckoutWizard from '../components/CheckoutWizard';
   
-  export default function Billing() { //Shipping
+  export default function Billing() { 
     const {
       handleSubmit,
       control,
@@ -26,7 +26,7 @@ import CheckoutWizard from '../components/CheckoutWizard';
   
     useEffect(() => {
       if (!userInfo) {
-        router.push('/login?redirect=/billing'); //shipping
+        router.push('/login?redirect=/billing'); 
       }
     }, []);
   
@@ -34,9 +34,10 @@ import CheckoutWizard from '../components/CheckoutWizard';
   
     const submitHandler =  ({ fullName, address, city, postalCode, country }) => {
       
-        dispatch({ type: 'SAVE_BILLING_ADDRESS', payload: { fullName, address, city, postalCode, country } }); //SAVE_SHIPPING_ADDRESS
-        Cookies.set('billingAddress', { fullName, address, city, postalCode, country }); //shippingAddress
-        router.push('/abo'); //payment
+        dispatch({ type: 'SAVE_BILLING_ADDRESS', payload: { fullName, address, city, postalCode, country } }); 
+      
+        Cookies.set('billingAddress', { fullName, address, city, postalCode, country }); 
+        router.push('/abo'); 
     };
     return (
       <Layout title="Billing Address">

@@ -24,7 +24,6 @@ import {
   ListItemText,
   InputBase,
 } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import CancelIcon from '@material-ui/icons/Cancel';
 import SearchIcon from '@material-ui/icons/Search';
@@ -123,9 +122,6 @@ export default function Layout({ title, description, children }) {
     setAnchorEl(null);
     dispatch({ type: 'USER_LOGOUT' });
     Cookies.remove('userInfo');
-    Cookies.remove('cartItems');
-    Cookies.remove('shippinhAddress');
-    Cookies.remove('paymentMethod');
     router.push('/');
   };
   return (
@@ -258,19 +254,8 @@ export default function Layout({ title, description, children }) {
                     >
                       Upgrade
                     </MenuItem>
-                    <MenuItem
-                      onClick={(e) =>
-                        loginMenuCloseHandler(e, '/order-history')
-                      }
-                    >
-                      Order Hisotry
-                    </MenuItem>
                     {userInfo.isAdmin && (
-                      <MenuItem
-                        onClick={(e) =>
-                          loginMenuCloseHandler(e, '/admin/dashboard')
-                        }
-                      >
+                      <MenuItem>
                         Admin Dashboard
                       </MenuItem>
                     )}

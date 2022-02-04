@@ -11,7 +11,7 @@ import React from 'react';
 import Divider from '@mui/material/Divider';
 import NextLink from 'next/link';
 
-export default function CompanyItem({ company, addToCartHandler }) {
+export default function CompanyItem({ company }) {
   return (
     <Card>
       <NextLink href={`/company/${company.slug}`} passHref>
@@ -24,7 +24,7 @@ export default function CompanyItem({ company, addToCartHandler }) {
           alt={company.companyName}
         ></CardMedia>
           <CardContent>
-            <Typography variant="h4">{company.companyName}</Typography>
+            <Typography variant="h5">{company.companyName}</Typography>
           </CardContent>
           <CardContent>
           <Typography variant="button">{company.companyType}</Typography>
