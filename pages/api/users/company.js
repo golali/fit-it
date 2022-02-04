@@ -8,6 +8,8 @@ const handler = nc();
 
 handler.post(async (req, res) => {
   await db.connect();
+  console.log("NewCompany");
+  try{
   const newCompany = new Company({
     companyName: req.body.companyName,
     slug: req.body.companyName,
@@ -18,10 +20,14 @@ handler.post(async (req, res) => {
     knowHow: req.body.knowHow,
     description: req.body.description,
   });
+  console.log("NewCompany=" + newCompany);
   const company = await newCompany.save();
   await db.disconnect();
-
-
+  }
+  catch (err) {
+    enqueueSnackbar(getError(err), { variant: 'error' });
+    console.log(err);
+  }
 const token = signToken(user);
 res.send("OK Done!");
 });

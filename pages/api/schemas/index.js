@@ -12,4 +12,14 @@ export  const  typeDefs  =  gql`
 
     type  Query {
         getCompanies: [Company]
-    }`
+    }
+    
+    type Mutation {
+        createCompany(companyName: String, 
+                        companyType: String, 
+                            companyWebsite: String, 
+                                companyIndustry: String, 
+                                    knowHow: String, 
+                                      description: String): String       
+    }
+    `
